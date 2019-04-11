@@ -1,12 +1,12 @@
-package com.in28minutes.spring.aop.springaop;
+package com.in28minutes.spring.aop.springaop.data;
 
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class Dao1 {
+public class Dao2 {
 	
 	public String retriveSomething() {
-		return "Dao1";
+		return "Dao2";
 	}
 
 }
