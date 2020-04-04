@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("management/api/v1/students")
@@ -24,6 +25,19 @@ public class StudentManagementController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMINTRAINEE')")
     public List<Student> getStudents() {
         return STUDENTS;
+    }
+
+    @GetMapping(path = "{studentId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMINTRAINEE')")
+    public Student getStudent(@PathVariable("studentId") Integer studentId) {
+        Optional<Student> studentOptional = STUDENTS.stream()
+                .filter(student -> studentId.equals(student.getStudentId()))
+                .findFirst();
+
+        if (studentOptional.isPresent())
+            return studentOptional.get();
+
+        return null;
     }
 
     @PostMapping
