@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
+import static com.sog.spring.security.learnspringsecurity.security.ApplicationRole.*;
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -27,8 +29,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*")
-                .permitAll()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .antMatchers("/api/**").hasRole(STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -38,11 +40,24 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails user = User.builder()
+        UserDetails anna = User.builder()
                 .username("anna")
                 .password(passwordEncoder.encode("password"))
-                .roles("STUDENT")
+                .roles(STUDENT.name())
                 .build();
-        return new InMemoryUserDetailsManager(user);
+
+        UserDetails linda = User.builder()
+                .username("linda")
+                .password(passwordEncoder.encode("password123"))
+                .roles(COURSE.name())
+                .build();
+
+        UserDetails tom = User.builder()
+                .username("linda")
+                .password(passwordEncoder.encode("password123"))
+                .roles(COURSE.name())
+                .build();
+
+        return new InMemoryUserDetailsManager(anna, linda);
     }
 }
