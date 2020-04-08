@@ -1,6 +1,7 @@
 package com.sog.spring.security.learnspringsecurity.security;
 
 import com.sog.spring.security.learnspringsecurity.auth.ApplicationUserService;
+import com.sog.spring.security.learnspringsecurity.jwt.JwtUsernamePasswordAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -38,6 +40,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 //                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //                .and()
                 .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager()))
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
@@ -46,8 +51,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(ApplicationPermission.COURSE_WRITE.getPermission())
                 .antMatchers(HttpMethod.GET, "/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())*/
                 .anyRequest()
-                .authenticated()
-                .and()
+                .authenticated();
+                // Form based auth
+/*                .and()
 //                .httpBasic();
                 .formLogin()
                     .loginPage("/login").permitAll()
@@ -66,11 +72,11 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
-                    .logoutSuccessUrl("/login");
+                    .logoutSuccessUrl("/login");*/
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
