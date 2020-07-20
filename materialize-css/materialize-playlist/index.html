@@ -18,11 +18,17 @@
       min-height: 1000px;  
     }
 
+    .section {
+      padding-top: 4vw;
+      padding-bottom: 4vw;
+    }
+
     @media screen and (max-width: 670px) {
       header {
         min-height: 500px;
       }
     }
+
   </style>
 </head>
 <body>
@@ -51,6 +57,35 @@
   <!-- navbar -->
 
   <!-- photo / grid -->
+  <section class="container section" id="photo's">
+    <div class="row">
+      <div class="col s12 l4">
+        <img src="img/portrait.jpg" alt="" class="responsive-img materialbox">
+      </div>
+      <div class="col s12 l6 offset-l1">
+        <h2 class="indigo-text text-darken-4">Portraits</h2>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione tempora quisquam quo aperiam laborum alias, optio, non, perspiciatis tenetur dignissimos dolor et assumenda at maxime cum omnis voluptatum atque! Dolores.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 l4 push-l7 offset-l1">
+        <img src="img/city.jpg" alt="" class="responsive-img materialbox">
+      </div>
+      <div class="col s12 l6 pull-l5 offset-l1 right-align">
+        <h2 class="indigo-text text-darken-4">Cityscapes</h2>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione tempora quisquam quo aperiam laborum alias, optio, non, perspiciatis tenetur dignissimos dolor et assumenda at maxime cum omnis voluptatum atque! Dolores.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 l4">
+        <img src="img/nature.jpg" alt="" class="responsive-img materialbox">
+      </div>
+      <div class="col s12 l6 offset-l1">
+        <h2 class="indigo-text text-darken-4">Nature</h2>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione tempora quisquam quo aperiam laborum alias, optio, non, perspiciatis tenetur dignissimos dolor et assumenda at maxime cum omnis voluptatum atque! Dolores.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- parallax -->
 
@@ -68,6 +103,7 @@
   <script>
     $(document).ready(function(){
       $(".sidenav").sidenav();
+      $(".materialbox").materialbox();
     });
   </script>
 </body>
